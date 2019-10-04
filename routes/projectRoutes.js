@@ -23,10 +23,7 @@ router.get('/:id', (req, res) => {
                         });
                     }
                 })
-                .catch(error => {
-                    res.status(500).json({
-                        error: "unable to retrieve projects with given id"
-                    })
+                .catch(error => {res.status(500).json({error: "unable to retrieve projects with given id" })
                 });
             })
 
