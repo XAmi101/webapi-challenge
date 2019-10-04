@@ -12,20 +12,43 @@ router.get("/", (req, res,) => {
 }); 
 
 router.get('/:id', (req, res) => {
-            id = req.params.id
-            Project.get(id)
-                .then(project => {
-                    if (project) {
-                        res.status(200).json(project)
-                    } else {
-                        res.status(404).json({
-                            message: "The project doesn't exist with given ID"
-                        });
-                    }
-                })
-                .catch(error => {res.status(500).json({error: "unable to retrieve projects with given id" })
+    id = req.params.id
+    Project.get(id)
+        .then(project => {
+            if (project) {
+                res.status(200).json(project)
+            } else {
+                res.status(404).json({
+                    message: "The project doesn't exist with given ID"
                 });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: "unable to retrieve projects with given id"
             })
+        });
+})
+
+
+router.get('/:id/all', (req, res) => {
+    id = req.params.id
+    Project.getProjectActions(id)
+        .then(project => {
+            if (project) {
+                res.status(200).json(project)
+            } else {
+                res.status(404).json({
+                    message: "The project doesn't exist with given ID"
+                });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                error: "unable to retrieve project actions with given id"
+            })
+        });
+})
 
 router.post('/', (req, res) => {
 const body= req.body;
