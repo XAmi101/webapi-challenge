@@ -1,9 +1,11 @@
 const express = require('express');
 
 const server = express();
+
 server.use(express.json());
 
 const projectRoutes = require('./routes/projectRoutes.js');
+const actionRoutes = require('./routes/actionRoutes.js');
 
 
 server.get('/', (req, res) => {
@@ -11,22 +13,16 @@ server.get('/', (req, res) => {
 });
 
 
-// server.use('/', (req, res) => {
-//     res.send('Let's started!');
-// }); 
 
+function logger(req, res, next) {
+    console.log(`A ${req.method} to ${req.path} at ${Date.now()}`)
+    next();
+};
 
-// //custom middleware
-// function logger(req, res, next) {
-//   console.log(`${new Date().toISOString()} ${req.method} to ${req.url}`);
-//   next();
-// }
-// server.use(logger);
+server.use(logger);
+
 server.use("/api/projects", projectRoutes);
-
-
-
-
+server.use("/api/actions", actionRoutes);
 
 
 
